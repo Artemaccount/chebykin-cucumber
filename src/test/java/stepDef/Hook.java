@@ -1,3 +1,5 @@
+package stepDef;
+
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
@@ -11,7 +13,6 @@ public class Hook {
     public static void before() {
         System.setProperty("webdriver.chrome.driver", "C:\\driver\\chromedriver.exe");
         driver = new ChromeDriver();
-        System.setProperty("webdriver.chrome.driver", "C:\\driver\\chromedriver.exe");
     }
 
     public static WebDriver getDriver(){

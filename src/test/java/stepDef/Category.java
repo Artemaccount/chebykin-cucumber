@@ -1,3 +1,4 @@
+package stepDef;
 
 enum Category {
     АВТО("Автомобили", "9"),

@@ -1,10 +1,12 @@
+package stepDef;
+
 import com.google.common.io.Files;
 import io.cucumber.java.ParameterType;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Пусть;
 import io.cucumber.java.ru.Тогда;
 import io.qameta.allure.Attachment;
-import io.qameta.allure.Step;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +40,6 @@ public class StepDef {
     }
 
 
-    @Step("Открываем ресурс Авито")
     @Пусть("открыт ресурс Авито")
     public static void openAvito() throws IOException {
         Hook.getDriver().manage().window().maximize();
@@ -51,7 +52,6 @@ public class StepDef {
         return Category.valueOf(categoryName);
     }
 
-    @Step("В выпадающем списке категорий выбираем ОРГТЕХНИКА")
     @И("в выпадающем списке категорий выбрана {category}")
     public static void chooseCat(Category category) throws IOException {
         Select categories = new Select(Hook.getDriver().findElement(By.xpath("//select[@name='category_id']")));
@@ -59,9 +59,7 @@ public class StepDef {
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("В поле поиска вводим значение принтер")
     @И("в поле поиска введено значение {word}")
-    @org.junit.jupiter.api.Test
     public static void printPrinter(String string) throws InterruptedException, IOException {
         waiter = new WebDriverWait(Hook.getDriver(), 3000);
         synchronized (waiter) {
@@ -71,15 +69,12 @@ public class StepDef {
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("Кликаем по выпадающему списку региона")
     @Тогда("кликнуть по выпадающему списку региона")
-    @org.junit.jupiter.api.Test
     public static void clickReg() throws IOException {
         Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/region']")).click();
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("В поле регион вводим значение Владивосток")
     @Тогда("в поле регион ввести значение {word}")
     public static void printVladivostok(String string) throws IOException {
         Hook.getDriver().findElement(By.xpath("//*[@data-marker='popup-location/region/input']"))
@@ -87,7 +82,6 @@ public class StepDef {
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("Нажимаем кнопку показать объявления")
     @И("нажать кнопка показать объявления")
     public static void showAds() throws InterruptedException, IOException {
         synchronized (waiter) {
@@ -98,31 +92,30 @@ public class StepDef {
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("Открываем страницу результаты по запросу принтер")
     @Тогда("открылась страница результаты по запросу {word}")
-    public static void openPage(String string) throws IOException {
-        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-filters/submit-button']")).click();
+    public static void openPage(String expected) throws IOException {
+        String actual = Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/suggest']"))
+                .getAttribute("value");
+        Assertions.assertEquals(expected, actual);
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("Активируем чекбокс только с фотографией")
     @И("активирован чекбокс только с фотографией")
     public static void checkBox() throws IOException {
-        Hook.getDriver().findElement(By.xpath("/html/body/div[1]/div[2]/div/div[2]/div/div[4]/div[1]/label[2]")).click();
-        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/submit-button']")).click();
+        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/with-images']")).click();
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("В выпадающем списке сортировка выбираем значение ДОРОЖЕ")
     @И("в выпадающем списке сортировка выбрано значение {category}")
     public static void sortBy(Category category) throws IOException {
+        //
+        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/with-images']")).click();
         Hook.getDriver().findElement(By.xpath
                 ("/html/body/div[1]/div[3]/div[3]/div[3]/div[1]/div[2]/select/option["
                         + category.getNumber() + "]")).click();
         saveScreenshot(Hook.getDriver());
     }
 
-    @Step("В консоль выводим значение название и цены 3 первых товаров")
     @И("в консоль выведено значение название и цены {int} первых товаров")
     public static void printFirstThree(int firstItemsCount) throws IOException {
         List<WebElement> elements = Hook.getDriver().findElements(By.xpath("//div[@data-marker='item']"));

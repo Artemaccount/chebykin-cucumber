@@ -1,4 +1,5 @@
-StepDef.class
-Item.class
+stepDef\Category.class
 RunnerTest.class
-Category.class
+stepDef\Hook.class
+stepDef\Item.class
+stepDef\StepDef.class

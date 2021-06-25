@@ -5,10 +5,9 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/features",
-        glue = "StepDef",
+        glue = "stepDef",
         tags = "@All",
         dryRun = false
 )
 public class RunnerTest {
-
 }
