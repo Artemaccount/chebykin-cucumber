@@ -1,0 +1,30 @@
+-------------------------------------------------------------------------------
+Test set: RunnerTest
+-------------------------------------------------------------------------------
+Tests run: 10, Failures: 0, Errors: 8, Skipped: 0, Time elapsed: 60.763 s <<< FAILURE! - in RunnerTest
+printVladivostok{String}  Time elapsed: 0.837 s  <<< ERROR!
+org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [java.lang.String arg0] in method [void RunnerTest.printVladivostok(java.lang.String) throws java.io.IOException].
+
+sortBy{Category}  Time elapsed: 0.336 s  <<< ERROR!
+org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [Category arg0] in method [void RunnerTest.sortBy(Category) throws java.io.IOException].
+
+openPage{String}  Time elapsed: 0.072 s  <<< ERROR!
+org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [java.lang.String arg0] in method [void RunnerTest.openPage(java.lang.String) throws java.io.IOException].
+
+printFirstThree{int}  Time elapsed: 0.042 s  <<< ERROR!
+org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [int arg0] in method [void RunnerTest.printFirstThree(int) throws java.io.IOException].
+
+printPrinter{String}  Time elapsed: 0.028 s  <<< ERROR!
+org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [java.lang.String arg0] in method [void RunnerTest.printPrinter(java.lang.String) throws java.lang.InterruptedException,java.io.IOException].
+
+clickReg  Time elapsed: 0.545 s  <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "org.openqa.selenium.WebDriver.findElement(org.openqa.selenium.By)" because "RunnerTest.driver" is null
+	at RunnerTest.clickReg(RunnerTest.java:95)
+
+chooseCat{Category}  Time elapsed: 0.244 s  <<< ERROR!
+org.junit.jupiter.api.extension.ParameterResolutionException: No ParameterResolver registered for parameter [Category arg0] in method [void RunnerTest.chooseCat(Category) throws java.io.IOException].
+
+showAds  Time elapsed: 0.138 s  <<< ERROR!
+java.lang.NullPointerException: Cannot enter synchronized block because "RunnerTest.waiter" is null
+	at RunnerTest.showAds(RunnerTest.java:112)
+
