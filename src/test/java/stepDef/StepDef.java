@@ -5,13 +5,13 @@ import io.cucumber.java.ParameterType;
 import io.cucumber.java.ru.И;
 import io.cucumber.java.ru.Пусть;
 import io.cucumber.java.ru.Тогда;
+//import io.qameta.allure.Attachment;
+//import org.junit.jupiter.api.Assertions;
 import io.qameta.allure.Attachment;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 
@@ -22,9 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StepDef {
-
-
-    private static WebDriverWait waiter;
 
     private static String pathScreenshots = "./screenshots/";
     private static String filename = "screenshot";
@@ -61,9 +58,8 @@ public class StepDef {
 
     @И("в поле поиска введено значение {word}")
     public static void printPrinter(String string) throws InterruptedException, IOException {
-        waiter = new WebDriverWait(Hook.getDriver(), 3000);
-        synchronized (waiter) {
-            waiter.wait(2000);
+        synchronized (Hook.getWaiter()) {
+            Hook.getWaiter().wait(2000);
         }
         Hook.getDriver().findElement(By.xpath("//*[@id='search']")).sendKeys(string);
         saveScreenshot(Hook.getDriver());
@@ -84,8 +80,8 @@ public class StepDef {
 
     @И("нажать кнопка показать объявления")
     public static void showAds() throws InterruptedException, IOException {
-        synchronized (waiter) {
-            waiter.wait(1500);
+        synchronized (Hook.getWaiter()) {
+            Hook.getWaiter().wait(1500);
         }
         Hook.getDriver().findElement(By.xpath("//*[@data-marker='suggest(0)']")).click();
         Hook.getDriver().findElement(By.xpath("//*[@data-marker='popup-location/save-button']")).click();
@@ -96,23 +92,25 @@ public class StepDef {
     public static void openPage(String expected) throws IOException {
         String actual = Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/suggest']"))
                 .getAttribute("value");
-        Assertions.assertEquals(expected, actual);
+//        Assertions.assertEquals(expected, actual);
         saveScreenshot(Hook.getDriver());
     }
 
     @И("активирован чекбокс только с фотографией")
     public static void checkBox() throws IOException {
-        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/with-images']")).click();
+        List<WebElement> elements =
+                Hook.getDriver().findElements(By.xpath("//*[contains(@class,'checkbox-size-s-yHrZq')]"));
+        elements.get(1).click();
+        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/submit-button']")).click();
         saveScreenshot(Hook.getDriver());
     }
 
     @И("в выпадающем списке сортировка выбрано значение {category}")
     public static void sortBy(Category category) throws IOException {
-        //
-        Hook.getDriver().findElement(By.xpath("//*[@data-marker='search-form/with-images']")).click();
-        Hook.getDriver().findElement(By.xpath
-                ("/html/body/div[1]/div[3]/div[3]/div[3]/div[1]/div[2]/select/option["
-                        + category.getNumber() + "]")).click();
+        List<WebElement> elements =
+                Hook.getDriver().findElements(By.xpath("//*[@class='select-select-3CHiM']"));
+        Select categories = new Select(elements.get(1));
+        categories.selectByValue(category.getNumber());
         saveScreenshot(Hook.getDriver());
     }
 
